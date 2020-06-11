@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <h1>Ideal tables</h1>
+   <div>
+
+       <input type="text" id="name" placeholder="name">
+       <input type="text" id="size" placeholder="size">
+       <input type="text" id="color" placeholder="color">
+       <input type="text" id="material" placeholder="material">
+       <input type="text" id="legs" placeholder="legs">
+       <button onclick="enviarInfo()">ingresa una Nueva Mesa</button>
+    </div>
+
+    <div>
+
+        <input type="text" id="changecolor" placeholder="changecolor">
+
+        <button onclick="changeColor()">cambia el color</button>
+     </div>
+     <div>
+
+        <input type="text" id="delete" placeholder="erase table">
+
+        <button onclick="borrarMesa()">cambia el color</button>
+     </div>
+    <script>
+function enviarInfo() {
+
+    let name=document.getElementById("name").value
+    let size=parseInt(document.getElementById("size").value)
+    let color=document.getElementById("color").value
+    let material=document.getElementById("material").value
+    let legs=document.getElementById("legs").value
+
+    let mesa={
+        name,
+        size,
+        color,
+        material,
+        legs}
+
+        fetch('/api/anyadir',{
+         method:'POST',
+         headers:{'Content-Type': 'application/json'},
+         body:JSON.stringify(mesa) })
+         .then(function respuesta(respuesta) {
+
+            return respuesta.json();
+             
+         })
+         .then (function datos(datos) {
+
+            console.log(datos)
+             
+         })
+}
+
+function changeColor() {
+
+let color=document.getElementById("changecolor").value
+
+    fetch(`/api/modificar/${color}`,{
+    method:'PUT',
+      headers:{'Content-Type': 'application/json'}
+    // body:JSON.stringify(${color}
+     })
+     .then(function respuesta(respuesta) {
+
+        return respuesta.json();
+         
+   })
+    .then (function datos(datos) {
+
+        console.log(datos)
+         
+      })
+ }
+
+
+ function borrarMesa() {
+
+let legs=document.getElementById("delete").value
+
+    fetch(`/api/borrar/${legs}`,{
+    method:'DELETE',
+      headers:{'Content-Type': 'application/json'}
+    // body:JSON.stringify(${color}
+     })
+     .then(function respuesta(respuesta) {
+
+        return respuesta.json();
+         
+   })
+    .then (function datos(datos) {
+
+        console.log(datos)
+         
+      })
+ }
+
+    </script>
+    </body>
+
+
+</html>
